@@ -163,6 +163,36 @@ python demo_element_hf.py --model_path ./hf_model --input_path ./demo/element_im
 - 🤗 Support for Hugging Face Transformers for easier integration
 
 
+## ONNX Export and inference
+
+
+### Onnxruntime - Optimum - Export & usage
+
+```bash
+# Export onnx fp32
+python export_onnx.py --output_dir ./dolphin_onnx
+# Export onnx fp16
+python export_onnx.py --output_dir ./dolphin_onnx --fp16
+
+# Inference
+python run_onnx_inference \
+    --onnx_model_path ./dolphin_onnx_fp16 \
+    --image_path demo/element_imgs/table_1.jpeg \
+    --prompt "Parse the table in the image."
+
+# Demo
+python demo_page_onnx.py --onnx_model_path ./dolphin_onnx_fp16 --input_path demo/page_imgs/page_6.pdf --save_dir results-dir --max_batch_size 4
+
+# Optional: onnxsim - model optimization
+
+# Install onnxsim
+pip install onnxsim
+
+# Run onnxsim for all three onnx models
+onnxsim <model/path>.onnx <output/path>.onnx
+```
+
+
 ## 📮 Notice
 **Call for Bad Cases:** If you have encountered any cases where the model performs poorly, we would greatly appreciate it if you could share them in the issue. We are continuously working to optimize and improve the model.
 
